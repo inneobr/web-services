@@ -5,7 +5,7 @@ HELP.md
 ###!**/src/test/**/target/
 
 target/classes/
-target/generated-sources/
+target/generated-sources/*
 target/maven-archiver/
 target/maven-status/
 target/surefire-reports/
