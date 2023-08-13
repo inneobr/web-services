@@ -1,9 +1,10 @@
 package org.inneo.api.web;
 
 import reactor.core.publisher.Mono;
-import org.inneo.api.domain.HsBrasil;
+
 import org.springframework.http.MediaType;
 import org.springframework.http.HttpMethod;
+import org.inneo.api.domain.hsbrasil.HsBrasil;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;

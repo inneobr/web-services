@@ -1,6 +1,6 @@
-package org.inneo.api.repository;
+package org.inneo.api.repository.hsbrasil;
 
-import org.inneo.api.domain.Results;
+import org.inneo.api.domain.hsbrasil.Results;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ResultsRep extends JpaRepository<Results, Long>{

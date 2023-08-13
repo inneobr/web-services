@@ -1,10 +1,13 @@
-package org.inneo.api.domain;
+package org.inneo.api.domain.hsbrasil;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.Builder;
 
 import lombok.NoArgsConstructor;
+
+import org.inneo.api.domain.GenericEntity;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;

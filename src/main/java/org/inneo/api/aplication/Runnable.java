@@ -10,11 +10,11 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 @AllArgsConstructor
 public class Runnable {
-	private final long time = 21600000;
+	private final long midday = 21600000;
 	private WeatherService weatherService;
 	
-	@Scheduled(fixedDelay = time)
+	@Scheduled(fixedDelay = midday)
 	public void getWeather() {
 		weatherService.getWeather();
-	}
+	}	
 }
