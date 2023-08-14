@@ -25,6 +25,8 @@ public class WeatherService {
 		
 		HsBrasil response = weatherService.getWeather(cidade, estado);
 		if(response != null) {
+			String municipio = response.getResults().getCity().replace(" ", "");
+			response.getResults().setCity(municipio);
 			if(response.getResults() != null) {
 				Results create = resultsRep.findByCityAndDate(response.getResults().getCity(), response.getResults().getDate());
 				if(create != null) {

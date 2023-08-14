@@ -24,7 +24,7 @@ public abstract class GenericEntity implements Serializable{
 	
 	@JsonIgnore
 	@CreationTimestamp
-	@JsonFormat(pattern="dd-MM-yyyy HH:mm:ss")
+	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
 	private Date published;
 
 }

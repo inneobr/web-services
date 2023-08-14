@@ -19,7 +19,7 @@ import jakarta.persistence.Transient;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "_results")
+@Table(name = "_clima")
 public class Results extends GenericEntity{
 	private static final long serialVersionUID = 1L;
 	
