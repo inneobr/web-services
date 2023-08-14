@@ -20,8 +20,10 @@ public class WeatherService {
 	private ForecastRep forecastRep;
 	private ResultsRep resultsRep;
 	
-	public void getWeather() {
-		HsBrasil response = weatherService.getWeather("", "PR");
+	
+	public void getWeather(String cidade, String estado) {		
+		
+		HsBrasil response = weatherService.getWeather(cidade, estado);
 		if(response != null) {
 			if(response.getResults() != null) {
 				Results create = resultsRep.findByCityAndDate(response.getResults().getCity(), response.getResults().getDate());
