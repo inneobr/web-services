@@ -1,8 +1,8 @@
-package org.inneo.api.repository.cidades;
+package org.inneo.api.repository.cities;
 
-import org.inneo.api.domain.cidade.Cidade;
+import org.inneo.api.domain.cidade.Cities;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface CidadeRep extends JpaRepository<Cidade, Long>{
-	Cidade findByCodigo(Long id);	
+public interface CitiesRep extends JpaRepository<Cities, Long>{
+	Cities findByCodigo(Long id);	
 }

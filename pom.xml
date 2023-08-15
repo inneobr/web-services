@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>org.inneo</groupId>
 	<artifactId>api</artifactId>
-	<version>beta</version>
+	<version>service</version>
 	<name>api</name>
 	<description>Integration Api w-services</description>
 	<properties>

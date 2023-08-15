@@ -20,8 +20,8 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "_cidades")
-public class Cidade extends GenericEntity{
+@Table(name = "_cities")
+public class Cities extends GenericEntity{
 		private static final long serialVersionUID = 1L;
 		
 		@NonNull
@@ -35,4 +35,8 @@ public class Cidade extends GenericEntity{
 		@NonNull
 		@Column(name = "estado")
 		private String estado;
+		
+		public String getCidadeUf() {
+			return cidade + "," + estado;
+		}
 }

@@ -22,13 +22,11 @@ public class WebService {
 				  .build();
 	}
 	
-	public HsBrasil getWeather(String cidade, String estado) {
+	public HsBrasil getWeather(String cidade) {
 		StringBuilder uri = new StringBuilder();
 		uri.append('?');
 		uri.append(api_base_cidade);
 		uri.append(cidade);
-		uri.append(',');
-		uri.append(estado);
 		
 		Mono<HsBrasil> previsaoTempo = webClient.method(HttpMethod.GET)
 				.uri(uri.toString())

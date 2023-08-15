@@ -18,7 +18,7 @@ import lombok.AllArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "_clima_next")
+@Table(name = "_weekly_forecast")
 public class Forecast extends GenericEntity{
 	private static final long serialVersionUID = 1L;
 		
