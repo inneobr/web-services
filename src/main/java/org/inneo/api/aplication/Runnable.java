@@ -21,7 +21,7 @@ public class Runnable {
 	
 	
 	@Scheduled(fixedDelay = run_time, 
-			initialDelay = 0_000)
+			initialDelay = 120_000)
 	public void getWeather() {
 		List<Cities> response = citiesRep.findAll();
 		if(response != null) {

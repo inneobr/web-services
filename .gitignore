@@ -46,3 +46,4 @@ build/
 /target/surefire-reports
 /target/generated-test-sources
 /target/api-service.jar.original
+/target/
