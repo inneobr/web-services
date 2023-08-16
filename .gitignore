@@ -11,8 +11,12 @@ target/api-service.jar.original
 
 !.mvn/wrapper/maven-wrapper.jar
 
-/src/main/resources/env
-
+### Arquivo com dados de acesso ao banco
+### .env
+### DB_HOST = "jdbc:postgresql://localhost:8000/database"
+### DB_USERNAME = "username"
+### DB_PASSWORD = "password"  
+/src/main/resources/.env
 
 ### STS ###
 .apt_generated
