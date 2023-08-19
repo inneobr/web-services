@@ -5,5 +5,8 @@
   \/_/   \/_/ \/_/   \/_/ \/_/   \/_____/   \/_____/ 
   
  ######### API DE SERVICOS ©INNEO.ORG 2023 #########
+ 
+ Servidor em produção carregando dados no banco postgres
+ do servidor vps, banco docker! 19/08/2023.
   
   
