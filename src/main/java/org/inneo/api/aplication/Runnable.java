@@ -19,11 +19,11 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @AllArgsConstructor
 public class Runnable {
 	private static final Logger logger = LoggerFactory.getLogger(Runnable.class);
-	private final long run_time = 3600000;
+	private final long timer = 1_800_000; //timer intervalo de 30 min: 1800000ms
 	private PrevisaoService previsaoService;
 	private ForecityRep forecityRep;	
 	
-	@Scheduled(fixedDelay = run_time, initialDelay = 60_000)
+	@Scheduled(fixedDelay = timer, initialDelay = 30_000)
 	public void getWeather() {
 		try {
 			List<Forecity> forecitys = forecityRep.findAll();	
@@ -34,7 +34,10 @@ public class Runnable {
 				}
 			}
 		}catch(NullPointerException e) {
-			logger.error("hsbrasil recusou-se a fornecer os dados.");
+			logger.error("HG-WEATHER recusou-se a fornecer dados meteorologia.");
 		}
-	}	
+	}		
+	
+	
+	
 }

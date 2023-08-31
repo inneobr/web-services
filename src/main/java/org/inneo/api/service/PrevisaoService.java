@@ -1,18 +1,18 @@
 package org.inneo.api.service;
 
-import java.time.LocalDate;
-import lombok.AllArgsConstructor;
-import org.inneo.api.web.HsBrasil;
-import org.inneo.api.web.WForecast;
-
-import org.inneo.api.web.WebService;
 import org.slf4j.Logger;
+import java.time.LocalDate;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
-import org.inneo.api.domain.previsao.Forecast;
-import org.inneo.api.domain.previsao.Weather;
+import lombok.AllArgsConstructor;
 
+import org.inneo.api.web.weather.WeatherDto;
+import org.springframework.beans.BeanUtils;
+import org.inneo.api.web.weather.ForecastDto;
+import org.inneo.api.web.weather.WeatherService;
+
+import org.inneo.api.domain.previsao.Weather;
 import org.springframework.stereotype.Service;
+import org.inneo.api.domain.previsao.Forecast;
 import org.inneo.api.repository.previsao.WeatherRep;
 import org.inneo.api.repository.previsao.ForecastRep;
 
@@ -20,23 +20,23 @@ import org.inneo.api.repository.previsao.ForecastRep;
 @AllArgsConstructor
 public class PrevisaoService {
 	private static final Logger logger = LoggerFactory.getLogger(PrevisaoService.class);
+	private WeatherService weatherService;
 	private ForecastRep forecastRep;
 	private WeatherRep weatherRep;
-	private WebService webervice;
 	
 	public void getWeather(String cidade) {			
-		HsBrasil hsbrasil = webervice.getWeather(cidade);			
-		if(hsbrasil.getResults() != null) {
+		WeatherDto weatherDto = weatherService.getWeather(cidade);			
+		if(weatherDto.getResults() != null) {
 			Weather weather = Weather.builder()					
-					.city(hsbrasil.getResults().getCity())
-					.time(hsbrasil.getResults().getTime())
-					.date(hsbrasil.getResults().getDate())
-					.temp(hsbrasil.getResults().getTemp()+" ºC")
-					.description(hsbrasil.getResults().getDescription())
+					.city(weatherDto.getResults().getCity())
+					.time(weatherDto.getResults().getTime())
+					.date(weatherDto.getResults().getDate())
+					.temp(weatherDto.getResults().getTemp()+" ºC")
+					.description(weatherDto.getResults().getDescription())
 					.build();
 			weatherRep.save(weather);
 
-			for(WForecast wcast: hsbrasil.getResults().getForecast()) {
+			for(ForecastDto wcast: weatherDto.getResults().getForecast()) {
 				if(wcast != null) {
 					var calendar = LocalDate.now();
 					Forecast forecast = Forecast.builder()
@@ -44,18 +44,18 @@ public class PrevisaoService {
 							.min(wcast.getMin()+" ºC")
 							.weekday(wcast.getWeekday())
 							.description(wcast.getDescription())
-							.city(hsbrasil.getResults().getCity())
+							.city(weatherDto.getResults().getCity())
 							.date(wcast.getDate()+"/"+calendar.getYear())
 							.build();	
 					
-					Forecast create = forecastRep.findByCityAndDate(hsbrasil.getResults().getCity(), wcast.getDate());
+					Forecast create = forecastRep.findByCityAndDate(weatherDto.getResults().getCity(), wcast.getDate()+"/"+calendar.getYear());
 					if(create == null) create = new Forecast();
 					BeanUtils.copyProperties(forecast, create);
 					forecastRep.save(create);
 				}
 			}
 		}else {
-			logger.error("hsbrasil recusou-se a fornecer os dados.");
+			logger.error("HG-BRASIL recusou-se a fornecer os dados.");
 		}
 	}
 }
