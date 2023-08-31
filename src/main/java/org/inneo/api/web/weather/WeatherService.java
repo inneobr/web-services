@@ -48,7 +48,7 @@ public class WeatherService {
 			return  weather;
 			
 		}catch(Exception e) {
-			throw new ObjectDefaultException("HG-WEATHER: ", e);
+			throw new ObjectDefaultException("HG-WEATHER: limite atingido");
 		}
 	}
 }

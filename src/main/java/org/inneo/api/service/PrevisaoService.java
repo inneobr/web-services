@@ -55,7 +55,7 @@ public class PrevisaoService {
 				}
 			}
 		}else {
-			logger.error("HG-BRASIL recusou-se a fornecer os dados.");
+			logger.error("HG-BRASIL: Não foi possivel carregar os dados.");
 		}
 	}
 }
