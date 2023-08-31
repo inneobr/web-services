@@ -1,60 +1,59 @@
 package org.inneo.api.service;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.time.LocalDate;
 import lombok.AllArgsConstructor;
+import org.inneo.api.web.HsBrasil;
+import org.inneo.api.web.WForecast;
+
 import org.inneo.api.web.WebService;
 import org.springframework.beans.BeanUtils;
+import org.inneo.api.domain.previsao.Forecast;
+import org.inneo.api.domain.previsao.Weather;
 
-import org.inneo.api.domain.hsbrasil.Results;
 import org.springframework.stereotype.Service;
-import org.inneo.api.domain.hsbrasil.Forecast;
-import org.inneo.api.domain.hsbrasil.HsBrasil;
-
-import org.inneo.api.repository.hsbrasil.ResultsRep;
-import org.inneo.api.repository.hsbrasil.ForecastRep;
+import org.inneo.api.repository.previsao.WeatherRep;
+import org.inneo.api.repository.previsao.ForecastRep;
 
 @Service
 @AllArgsConstructor
-public class WeatherService {
-	private static final Logger logger = LoggerFactory.getLogger(WeatherService.class);
-	private WebService weatherService;
+public class PrevisaoService {
 	private ForecastRep forecastRep;
-	private ResultsRep resultsRep;
+	private WeatherRep weatherRep;
+	private WebService webervice;
 	
-	
-	public void getWeather(String cities) {		
+	public void getWeather(String cidade) {	
 		
-		HsBrasil response = weatherService.getWeather(cities);
-		if(response != null) {
-			response.getResults().setCity(cities);
-			if(response.getResults() != null) {
-				Results create = resultsRep.findByCityAndDate(response.getResults().getCity(), response.getResults().getDate());
-				if(create != null) {
-					BeanUtils.copyProperties(response.getResults(), create);
-					resultsRep.save(create);
+		HsBrasil hsbrasil = webervice.getWeather(cidade);			
+		if(hsbrasil.getResults() != null) {
+			Weather weather = Weather.builder()					
+					.city(hsbrasil.getResults().getCity())
+					.time(hsbrasil.getResults().getTime())
+					.date(hsbrasil.getResults().getDate())
+					.temp(hsbrasil.getResults().getTemp()+" ºC")
+					.description(hsbrasil.getResults().getDescription())
+					.build();
+			weatherRep.save(weather);
+
+			for(WForecast wcast: hsbrasil.getResults().getForecast()) {
+				if(wcast != null) {
+					var calendar = LocalDate.now();
+					Forecast forecast = Forecast.builder()
+							.max(wcast.getMax()+" ºC")
+							.min(wcast.getMin()+" ºC")
+							.weekday(wcast.getWeekday())
+							.description(wcast.getDescription())
+							.city(hsbrasil.getResults().getCity())
+							.date(wcast.getDate()+"/"+calendar.getYear())
+							.build();	
+					
+					Forecast create = forecastRep.findByCityAndDate(hsbrasil.getResults().getCity(), wcast.getDate());
+					if(create == null) create = new Forecast();
+					BeanUtils.copyProperties(forecast, create);
+					forecastRep.save(create);
+				}else {
+					System.out.println("Previsao nula");
 				}
-				else {
-					resultsRep.save(response.getResults());
-				}
-				logger.info("Provision for today successfully saves.");
 			}
-			
-			if(response.getResults().getForecast() != null) {
-				for(Forecast forecast: response.getResults().getForecast()) {
-					forecast.setCity(cities);
-					Forecast create = forecastRep.findByCityAndDate(response.getResults().getCity(),forecast.getDate());
-					if(create != null) {						
-						BeanUtils.copyProperties(forecast, create);
-						forecastRep.save(create);
-					}else {
-						forecastRep.save(forecast);
-					}
-				}
-				logger.info("weekly forecast save successfully.");
-			}
-		}else {
-			logger.error("Daily limit of depleted records!");
 		}
 	}
 }

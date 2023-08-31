@@ -1,13 +1,14 @@
 package org.inneo.api.aplication;
 
-import lombok.AllArgsConstructor;
 
 import java.util.List;
+import lombok.AllArgsConstructor;
 
-import org.inneo.api.domain.cidade.Cities;
-import org.inneo.api.repository.cities.CitiesRep;
-import org.inneo.api.service.WeatherService;
+import org.inneo.api.service.PrevisaoService;
 import org.springframework.stereotype.Component;
+import org.inneo.api.domain.previsao.Forecity;
+
+import org.inneo.api.repository.previsao.ForecityRep;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
@@ -15,18 +16,18 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 @AllArgsConstructor
 public class Runnable {
-	private final long run_time = 14400000;
-	private WeatherService weatherService;
-	private CitiesRep citiesRep;
+	private final long run_time = 3600000;
+	private PrevisaoService previsaoService;
+	private ForecityRep forecityRep;
 	
 	
 	@Scheduled(fixedDelay = run_time, 
-			initialDelay = 120_000)
+			initialDelay = 60_000)
 	public void getWeather() {
-		List<Cities> response = citiesRep.findAll();
-		if(response != null) {
-			for(Cities cities: response) {
-				weatherService.getWeather(cities.getCidadeUf());
+		List<Forecity> forecitys = forecityRep.findAll();
+		if(forecitys != null) {
+			for(Forecity forecity: forecitys) {
+				previsaoService.getWeather(forecity.getCidadeEstado());
 			}
 		}		
 	}	

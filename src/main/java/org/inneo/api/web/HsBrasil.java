@@ -1,4 +1,4 @@
-package org.inneo.api.domain.hsbrasil;
+package org.inneo.api.web;
 
 import lombok.Data;
 

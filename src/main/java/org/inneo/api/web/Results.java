@@ -1,25 +1,19 @@
-package org.inneo.api.domain.hsbrasil;
+package org.inneo.api.web;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.Builder;
 import java.util.List;
-
-import org.inneo.api.domain.GenericEntity;
-
 import lombok.NoArgsConstructor;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import jakarta.persistence.Entity;
 import jakarta.persistence.Transient;
+import org.inneo.api.domain.GenericEntity;
 
 @Getter
 @Setter
-@Entity
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "_weather")
 public class Results extends GenericEntity{
 	private static final long serialVersionUID = 1L;
 	
@@ -35,5 +29,5 @@ public class Results extends GenericEntity{
 	private String wind_speedy;
 	
 	@Transient
-	private List<Forecast> forecast;
+	private List<WForecast> forecast;
 }

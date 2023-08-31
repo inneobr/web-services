@@ -1,25 +1,18 @@
-package org.inneo.api.domain.hsbrasil;
+package org.inneo.api.web;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.Builder;
-
 import lombok.NoArgsConstructor;
-
-import org.inneo.api.domain.GenericEntity;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import org.inneo.api.domain.GenericEntity;
 
 @Getter
 @Setter
-@Entity
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "_weekly_forecast")
-public class Forecast extends GenericEntity{
+public class WForecast extends GenericEntity{
 	private static final long serialVersionUID = 1L;
 		
 	private String max;
