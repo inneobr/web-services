@@ -1,8 +1,5 @@
 package org.inneo.api.web;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import reactor.core.publisher.Mono;
 import org.springframework.http.MediaType;
 import org.springframework.http.HttpMethod;
@@ -13,7 +10,6 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 @Service
 public class WebService {
-	private static final Logger logger = LoggerFactory.getLogger(WebService.class);
 	private static final String api_base_url = "https://api.hgbrasil.com/weather?";
 	private static final String api_base_cidade = "key=c2b5e8be&city_name=";
 	
