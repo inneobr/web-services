@@ -1,12 +1,12 @@
 package org.inneo.api.web;
 
-import reactor.core.publisher.Mono;
-
-import org.springframework.http.MediaType;
-import org.springframework.http.HttpMethod;
-import org.inneo.api.exceptions.ObjectDefaultException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import reactor.core.publisher.Mono;
+import org.springframework.http.MediaType;
+import org.springframework.http.HttpMethod;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -40,8 +40,7 @@ public class WebService {
 			HsBrasil weather = previsaoTempo.block();
 			return  weather;
 		}catch(Exception e) {
-			logger.error("hsbrasil recusou-se a fornecer os dados.");
-			throw new ObjectDefaultException("hsbrasil recusou-se a fornecer os dados.", e);
+			throw new NullPointerException("hsbrasil recusou-se a fornecer os dados.");
 		}
 	}
 }
