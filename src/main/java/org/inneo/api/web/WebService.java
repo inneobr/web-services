@@ -4,6 +4,7 @@ import reactor.core.publisher.Mono;
 
 import org.springframework.http.MediaType;
 import org.springframework.http.HttpMethod;
+import org.inneo.api.exceptions.ObjectDefaultException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -39,8 +40,8 @@ public class WebService {
 			HsBrasil weather = previsaoTempo.block();
 			return  weather;
 		}catch(Exception e) {
-			logger.error("HsBrasil não disponível...");
-			return null;
+			logger.error("hsbrasil recusou-se a fornecer os dados.");
+			throw new ObjectDefaultException("hsbrasil recusou-se a fornecer os dados.", e);
 		}
 	}
 }

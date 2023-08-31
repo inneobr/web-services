@@ -18,13 +18,12 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 public class Runnable {
 	private final long run_time = 3600000;
 	private PrevisaoService previsaoService;
-	private ForecityRep forecityRep;
+	private ForecityRep forecityRep;	
 	
-	
-	@Scheduled(fixedDelay = run_time, 
-			initialDelay = 60_000)
+	@Scheduled(fixedDelay = run_time, initialDelay = 60_000)
 	public void getWeather() {
-		List<Forecity> forecitys = forecityRep.findAll();
+		List<Forecity> forecitys = forecityRep.findAll();	
+		
 		if(forecitys != null) {
 			for(Forecity forecity: forecitys) {
 				previsaoService.getWeather(forecity.getCidadeEstado());
