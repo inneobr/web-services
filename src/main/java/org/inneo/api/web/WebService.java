@@ -4,12 +4,15 @@ import reactor.core.publisher.Mono;
 
 import org.springframework.http.MediaType;
 import org.springframework.http.HttpMethod;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @Service
 public class WebService {
+	private static final Logger logger = LoggerFactory.getLogger(WebService.class);
 	private static final String api_base_url = "https://api.hgbrasil.com/weather?";
 	private static final String api_base_cidade = "key=c2b5e8be&city_name=";
 	
@@ -22,17 +25,22 @@ public class WebService {
 	}
 	
 	public HsBrasil getWeather(String cidade) {
-		StringBuilder uri = new StringBuilder();
-		uri.append('?');
-		uri.append(api_base_cidade);
-		uri.append(cidade);
-		
-		Mono<HsBrasil> previsaoTempo = webClient.method(HttpMethod.GET)
-				.uri(uri.toString())
-				.retrieve()	
-				.bodyToMono(HsBrasil.class);
-		
-		HsBrasil weather = previsaoTempo.block();
-		return  weather;
+		try {
+			StringBuilder uri = new StringBuilder();
+			uri.append('?');
+			uri.append(api_base_cidade);
+			uri.append(cidade);
+			
+			Mono<HsBrasil> previsaoTempo = webClient.method(HttpMethod.GET)
+					.uri(uri.toString())
+					.retrieve()	
+					.bodyToMono(HsBrasil.class);
+			
+			HsBrasil weather = previsaoTempo.block();
+			return  weather;
+		}catch(Exception e) {
+			logger.error("HsBrasil não disponível...");
+			return null;
+		}
 	}
 }

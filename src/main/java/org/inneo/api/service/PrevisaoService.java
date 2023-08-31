@@ -6,6 +6,8 @@ import org.inneo.api.web.HsBrasil;
 import org.inneo.api.web.WForecast;
 
 import org.inneo.api.web.WebService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.inneo.api.domain.previsao.Forecast;
 import org.inneo.api.domain.previsao.Weather;
@@ -17,12 +19,12 @@ import org.inneo.api.repository.previsao.ForecastRep;
 @Service
 @AllArgsConstructor
 public class PrevisaoService {
+	private static final Logger logger = LoggerFactory.getLogger(PrevisaoService.class);
 	private ForecastRep forecastRep;
 	private WeatherRep weatherRep;
 	private WebService webervice;
 	
-	public void getWeather(String cidade) {	
-		
+	public void getWeather(String cidade) {			
 		HsBrasil hsbrasil = webervice.getWeather(cidade);			
 		if(hsbrasil.getResults() != null) {
 			Weather weather = Weather.builder()					
@@ -50,10 +52,10 @@ public class PrevisaoService {
 					if(create == null) create = new Forecast();
 					BeanUtils.copyProperties(forecast, create);
 					forecastRep.save(create);
-				}else {
-					System.out.println("Previsao nula");
 				}
 			}
+		}else {
+			logger.error("hsbrasil recusou-se a fornecer os dados.");
 		}
 	}
 }
