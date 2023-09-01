@@ -27,6 +27,9 @@ public class PrevisaoService {
 	public void getWeather(String cidade) {			
 		WeatherDto weatherDto = weatherService.getWeather(cidade);			
 		if(weatherDto.getResults() != null) {
+			Weather wcreate = weatherRep.findByCity(cidade);
+			if(wcreate == null) wcreate = new Weather();
+			
 			Weather weather = Weather.builder()					
 					.city(weatherDto.getResults().getCity())
 					.time(weatherDto.getResults().getTime())
@@ -34,7 +37,9 @@ public class PrevisaoService {
 					.temp(weatherDto.getResults().getTemp()+" ºC")
 					.description(weatherDto.getResults().getDescription())
 					.build();
-			weatherRep.save(weather);
+			
+			BeanUtils.copyProperties(weather, wcreate);
+			weatherRep.save(wcreate);
 
 			for(ForecastDto wcast: weatherDto.getResults().getForecast()) {
 				if(wcast != null) {

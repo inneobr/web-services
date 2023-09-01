@@ -5,4 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface WeatherRep extends JpaRepository<Weather, Long>{
 	Weather findByCityAndDate(String city, String date);
+	Weather findByCity(String city);
 }
