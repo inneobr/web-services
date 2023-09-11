@@ -24,10 +24,10 @@ public class PrevisaoService {
 	private ForecastRep forecastRep;
 	private WeatherRep weatherRep;
 	
-	public void getWeather(String cidade) {			
+	public void getWeather(String cidade) {	
 		WeatherDto weatherDto = weatherService.getWeather(cidade);			
 		if(weatherDto.getResults() != null) {
-			Weather wcreate = weatherRep.findByCity(cidade);
+			Weather wcreate = weatherRep.findByCity(cidade.replace(",", ", "));
 			if(wcreate == null) wcreate = new Weather();
 			
 			Weather weather = Weather.builder()					
@@ -51,7 +51,11 @@ public class PrevisaoService {
 							.description(wcast.getDescription())
 							.city(weatherDto.getResults().getCity())
 							.date(wcast.getDate()+"/"+calendar.getYear())
-							.build();	
+							.build();
+					
+					if(forecast.getDate().equals(weather.getDate())) {
+						forecast.setTemp(weatherDto.getResults().getTemp()+" ºC");
+					}
 					
 					Forecast create = forecastRep.findByCityAndDate(weatherDto.getResults().getCity(), wcast.getDate()+"/"+calendar.getYear());
 					if(create == null) create = new Forecast();
